@@ -4,13 +4,14 @@ import history from './utils/history';
 
 import AuthCheck from './utils/authcheck';
 
-import Home from './functional/home';
+import Home from './pages/home';
 import Header from './containers/header';
 import HooksContainer1 from './containers/hook1';
 import Callback from './containers/callback';
 import HooksForm from './containers/hooks_form1';
 import PrivateComponent from './containers/privatecomponent';
 import Profile from './containers/profile';
+import NBA from './pages/NBA';
 
 import Posts from './Blog/posts';
 import AddPost from './Blog/addpost';
@@ -19,6 +20,7 @@ import EditPost from './Blog/editpost';
 
 
 import Auth from './utils/auth';
+import TeamPage from './pages/TeamPage';
 
 export const auth = new Auth()
 
@@ -61,7 +63,7 @@ class Routes extends Component {
           <div>
             <Switch>
               <Route exact path='/' component={Home} />
-              <Route path='/hooksform' component={HooksForm} />
+              {/* <Route path='/hooksform' component={HooksForm} />
               <Route path='/hookscontainer' component={HooksContainer1} />
               <Route path='/authcheck' render={() => <AuthCheck auth={auth} /> }/>
               
@@ -74,7 +76,9 @@ class Routes extends Component {
               <Route path='/callback' render={(props) => { handleAuthentication(props); return <Callback />}} />
 
               <PrivateRoute path='/privateroute' auth={auth} component={PrivateComponent} />
-              <PrivateRoute path="/profile" auth={auth} component={Profile} />
+              <PrivateRoute path="/profile" auth={auth} component={Profile} /> */}
+              <Route exact path="/NBA" component={NBA}/>
+              <Route Route exact path="/:league/TeamPage/:teamAbbreviation" component={TeamPage}/>
 
 
             </Switch>
