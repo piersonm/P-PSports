@@ -18,7 +18,8 @@ const Header = styled.div`
 `
 
 const Title = styled.h1`
-    display: inline-flex;
+    display: flex;
+    flex-direction: column;
     font-size: 1.45em;
     font-weight: 500;
     text-align: left;

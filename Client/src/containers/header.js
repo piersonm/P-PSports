@@ -38,7 +38,7 @@ function ResponsiveAppBar() {
 
   return (
     <AppBar position="sticky">
-      <Container maxWidth="xl">
+      <Container maxWidth="100%">
         <Toolbar disableGutters>
           <HomeIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 3 }} />
           <Typography

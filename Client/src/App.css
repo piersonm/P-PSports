@@ -77,8 +77,8 @@
 }
 .slider-container {
  /* if you want to have a scrollbar, you can add overflow here */ 
-  overflow-x: hidden;
-  display: flex;
+  overflow-x: auto;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
   margin: 0rem 2rem;

@@ -13,7 +13,7 @@ class App extends Component {
         <BrowserRouter>
         <Header />
         <Routes>
-                <Route exact path="/NBA" element={<div className="NBA"><NBA /></div>}/>
+            <Route exact path="/NBA" element={<div className="NBA"><NBA /></div>}/>
                 
         </Routes>
         </BrowserRouter>

@@ -8,7 +8,6 @@ import { formatDate } from '../../Scoreboard/functionalSB/formatDate.js';
 import { formatBetting } from '../../Scoreboard/functionalSB/formatBetting.js';
 import { formatTV } from '../../Scoreboard/functionalSB/formatTV.js';
 import { formatSelectedData } from '../../Scoreboard/functionalSB/formatSelectedData.js';
-import Slider from '../../Scoreboard/Slider';
 
 
 const breakPoint = '(max-width: 550px)';
@@ -16,7 +15,7 @@ const breakPoint = '(max-width: 550px)';
 const Container = styled.div`
     min-height: 10vh;
     width: 98.5vw;
-    display: flex;
+    display: inline-flex;
     flex-direction: row;
     /* position: relative; */
 `
@@ -81,13 +80,13 @@ export default function NBA() {
     return (
         <Container className="parent">
             <SportHeaderDay sport='NBA' setDate={setDate}/>
-            <Slider >
-            <ScoreListContainer className="child" id="scores">
+            <div className='slider-container'>
+            <ScoreListContainer className='slider-wrapper' id="scores">
                 {games.map((game) => (
                     <ScoreBox key={game.id} gameData={game}/>
                 ))}
             </ScoreListContainer>
-            </Slider>
+            </div>
         </Container>
     )
 }
