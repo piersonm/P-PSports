@@ -1,27 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import SportHeaderDay from '../Scoreboard/componentsSB/SportHeaderDay';
+import SportHeaderDay from '../../Scoreboard/componentsSB/SportHeaderDay';
 import styled from 'styled-components';
-import ScoreBox from '../Scoreboard/componentsSB/ScoreBox.js';
-import { formatTime } from '../Scoreboard/functionalSB/formatTime.js';
-import { formatDate } from '../Scoreboard/functionalSB/formatDate.js';
-import { formatBetting } from '../Scoreboard/functionalSB/formatBetting.js';
-import { formatTV } from '../Scoreboard/functionalSB/formatTV.js';
-import { formatSelectedData } from '../Scoreboard/functionalSB/formatSelectedData.js';
+import ScoreBox from '../../Scoreboard/componentsSB/ScoreBox.js';
+import { formatTime } from '../../Scoreboard/functionalSB/formatTime.js';
+import { formatDate } from '../../Scoreboard/functionalSB/formatDate.js';
+import { formatBetting } from '../../Scoreboard/functionalSB/formatBetting.js';
+import { formatTV } from '../../Scoreboard/functionalSB/formatTV.js';
+import { formatSelectedData } from '../../Scoreboard/functionalSB/formatSelectedData.js';
+import Slider from '../../Scoreboard/Slider';
+
 
 const breakPoint = '(max-width: 550px)';
 
 const Container = styled.div`
-    min-height: 100vh;
-    background: rgb(240,240,240);
+    min-height: 10vh;
+    width: 98.5vw;
+    display: flex;
+    flex-direction: row;
+    /* position: relative; */
 `
 
 const ScoreListContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    max-width: 1300px;
-    width: 90%;
+    display: inline-flex;
+    flex-wrap: none;
     margin: 0 auto;
     
     @media ${breakPoint} {
@@ -77,13 +79,15 @@ export default function NBA() {
     }, [date])
 
     return (
-        <Container>
+        <Container className="parent">
             <SportHeaderDay sport='NBA' setDate={setDate}/>
-            <ScoreListContainer>
+            <Slider >
+            <ScoreListContainer className="child" id="scores">
                 {games.map((game) => (
                     <ScoreBox key={game.id} gameData={game}/>
                 ))}
             </ScoreListContainer>
+            </Slider>
         </Container>
     )
 }

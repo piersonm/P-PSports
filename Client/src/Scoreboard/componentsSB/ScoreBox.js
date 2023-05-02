@@ -5,10 +5,11 @@ import { Link } from 'react-router-dom'
 const breakPoint = '(max-width: 550px)'
 
 const Container = styled.div`
+  display: inline-block;
   flex: 1 1 calc(33.3% - 2em);
-  margin: 2em 1em;
-  max-width: 300px;
-  min-width: 250px;
+  margin: 0.5em .5rem;
+  max-width: 350px;
+  min-width: 300px;
   transition: all .25s ease;
   box-shadow: 0px 7px 15px rgba(0,0,0,0.4);
 
@@ -43,9 +44,9 @@ margin-left: auto;
 
 const LogoBackground = styled(Link)`
   width: 100%;
-  height: 90px;
+  height: 40px;
   background-color: ${props => props.color};
-  display: flex;
+  display: inline-flex;
   align-items: center;
   transition: all .3s ease;
   text-decoration: none;
@@ -82,7 +83,7 @@ const NameWrapper = styled.div`
 
 const Location = styled.div`
   font-size: .7rem;
-  position: absolute;
+  position: relative;
   top: 20%;
   color: black;
   white-space: nowrap;
@@ -97,7 +98,7 @@ const TeamName = styled.span`
   text-align: center;
   font-size: 1.15rem;
   font-weight: 500;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   color: black;
   margin: auto 0;
@@ -138,6 +139,7 @@ export default function ScoreBox({gameData}) {
         <Date>{gameData.date}</Date>
         <Time>{gameData.time}</Time>
         <TV>{gameData.tv}</TV>
+        <Link href=''>Box Score</Link>
       </GameInfo>
       <LogoBackground color={gameData.awayColor} to={`/${gameData.league}/TeamPage/${gameData.awayAbbreviation}`}>
         <Logo src={gameData.awayLogo} alt={`${gameData.awayName} logo`}/>

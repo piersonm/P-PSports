@@ -18,10 +18,12 @@ const Header = styled.div`
 `
 
 const Title = styled.h1`
-    font-size: 3rem;
+    display: inline-flex;
+    font-size: 1.45em;
     font-weight: 500;
-    text-align: center;
-    margin-bottom: 1em;
+    text-align: left;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5em;
     
     @media ${breakPoint} {
         font-size: 2.5rem;
@@ -33,13 +35,28 @@ const DayWrapper = styled.div`
     justify-content: space-around;
     align-items: center;
     width: 5%;
-    margin: 0 auto;
+    margin: 0;
     
     @media ${breakPoint} {
         flex-direction: column;
     }
 `
-
+const CalendarButton = styled.button`
+  background-color: black;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  padding: 10px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  &:hover { box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19); }
+`
 export default function SportHeaderDay({sport, setDate}) {
 
     let value = new Date();
@@ -60,9 +77,9 @@ export default function SportHeaderDay({sport, setDate}) {
 
     const [startDate, setStartDate] = useState(new Date());
     const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
-        <button className="example-custom-input" onClick={onClick} ref={ref}>
+        <CalendarButton onClick={onClick} ref={ref}>
           {value}
-        </button>
+        </CalendarButton>
     ));
     return (
         <Header>

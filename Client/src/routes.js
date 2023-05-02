@@ -11,7 +11,7 @@ import Callback from './containers/callback';
 import HooksForm from './containers/hooks_form1';
 import PrivateComponent from './containers/privatecomponent';
 import Profile from './containers/profile';
-import NBA from './pages/NBA';
+import NBA from './pages/NBA/NBA';
 
 import Posts from './Blog/posts';
 import AddPost from './Blog/addpost';
