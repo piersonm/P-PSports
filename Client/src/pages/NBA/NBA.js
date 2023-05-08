@@ -72,7 +72,7 @@ export default function NBA() {
                 formatTV(selectedGameData, rawGameData);
                 formatSelectedData(selectedGameData);
                 workingSetGames.push(selectedGameData);
-            }
+            }      
             setGames(workingSetGames);
         });
     }, [date])

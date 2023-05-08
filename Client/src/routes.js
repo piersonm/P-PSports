@@ -21,6 +21,7 @@ import EditPost from './Blog/editpost';
 
 import Auth from './utils/auth';
 import TeamPage from './pages/TeamPage';
+import BoxScore from './pages/NBA/BoxScore';
 
 export const auth = new Auth()
 
@@ -77,7 +78,8 @@ class Routes extends Component {
 
               <PrivateRoute path='/privateroute' auth={auth} component={PrivateComponent} />
               <PrivateRoute path="/profile" auth={auth} component={Profile} /> */}
-              <Route exact path="/NBA" component={NBA}/>
+              <Route path="/NBA" component={NBA}/>
+              <Route path="/:league/gameID/:id/boxscore" component={BoxScore} />
               <Route Route exact path="/:league/TeamPage/:teamAbbreviation" component={TeamPage}/>
 
 

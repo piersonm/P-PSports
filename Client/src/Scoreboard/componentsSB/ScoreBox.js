@@ -1,6 +1,6 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const breakPoint = '(max-width: 550px)'
 
@@ -135,11 +135,11 @@ const Score = styled.span`
 export default function ScoreBox({gameData}) {
   return (
     <Container>
-      <GameInfo>
+      <GameInfo name ='GameInfo' id={gameData.id}>
         <Date>{gameData.date}</Date>
         <Time>{gameData.time}</Time>
         <TV>{gameData.tv}</TV>
-        <Link href=''>Box Score</Link>
+        <Link to={`/${gameData.league}/gameID/${gameData.id}/boxscore`}>Box Score</Link>
       </GameInfo>
       <LogoBackground color={gameData.awayColor} to={`/${gameData.league}/TeamPage/${gameData.awayAbbreviation}`}>
         <Logo src={gameData.awayLogo} alt={`${gameData.awayName} logo`}/>
@@ -158,5 +158,5 @@ export default function ScoreBox({gameData}) {
         <Score>{gameData.homeScore}</Score>
       </LogoBackground>
     </Container>
-  )
+  ) 
 }
