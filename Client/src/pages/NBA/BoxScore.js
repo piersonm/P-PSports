@@ -5,7 +5,7 @@ import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
+import TableHead, { tableHeadClasses } from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
@@ -29,21 +29,34 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
   }));
 
+const StyledTableHead = styled(TableHead)(({ theme }) => ({
+    [`&.${tableHeadClasses.head}`]: {
+        backgroundColor: theme.palette.common.black,
+        fontSize: 30,
+    },
+}));
+
 export default function BoxScore() {
-    let url = window.location.href;
-    let removePath = url.split('D/')[1];
-    let id = removePath.split('/')[0];
+    var url = window.location.href;
+    var removePath = url.split('D/')[1];
+    var id = removePath.split('/')[0];
     // const [data, setData] = useState('');
-    const [teams, setTeams] = useState([]);
+    const [team1, setTeam1] = useState([]);
+    const [team2, setTeam2] = useState([]);
+    const [team1Players, setTeam1Players] = useState([]);
+    const [team2Players, setTeam2Players] = useState([]);
+    
     useEffect(() => {
         axios.get(`http://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=${id}`)
         .then(res => {
-            console.log(res.data);
+            
             // setData(res.data);
-            let teamData = [];
-            let playerData = [];
+            let team1 = {};
+            let team2 = {};
+            console.log(res.data);
             for (let i=0; i < res.data.boxscore.players.length; i++) {
               let rawPlayerData = res.data.boxscore.players[i].statistics[0].athletes;
+              let playerData = [];
               let rawTeamData = res.data.boxscore.players[i].team;
               rawPlayerData.map((player) => (
                 playerData.push({
@@ -71,80 +84,133 @@ export default function BoxScore() {
                   points: player.stats[13],
                 })
               ));
-              teamData.push({
-                teamID: rawTeamData.id,
-                teamDisplayName: rawTeamData.displayName,
-                playerStats: playerData
-              });
-           }
-           setTeams(teamData);
-        })
+              // eslint-disable-next-line default-case
+              switch(i) {
+                case 0:
+                    team1 = {
+                        teamID: rawTeamData.id,
+                        teamDisplayName: rawTeamData.displayName,
+                        playerStats: playerData,
+                        teamLogo: rawTeamData.logo,
+                        teamColor: rawTeamData.color
+                    };
+                // eslint-disable-next-line no-fallthrough
+                case 1:
+                    team2 = {
+                        teamID: rawTeamData.id,
+                        teamDisplayName: rawTeamData.displayName,
+                        playerStats: playerData,
+                        teamLogo: rawTeamData.logo,
+                        teamColor: rawTeamData.color
+                    };
+                }
+            }
+            setTeam1(team1);
+            setTeam1Players(team1.playerStats);
+            setTeam2(team2);
+            setTeam2Players(team2.playerStats);    
+        })        
         .catch((error) => {
             console.log(error)
         });
-    }, [id]);
-  
-    return (
-        <>
-        <>
-            {[teams] ? 
-                [teams].map(data => {
-                    console.log(data);
-                    return(
-                    //    <div className="data" key={data}>
-                    //      <h6>{JSON.stringify(data)}</h6>
-                    //    </div>
-                    <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                      <TableHead>
-                        <TableRow>
-                          <StyledTableCell>Player</StyledTableCell>
-                          <StyledTableCell align="right">MIN</StyledTableCell>
-                          <StyledTableCell align="right">FG</StyledTableCell>
-                          <StyledTableCell align="right">3FG</StyledTableCell>
-                          <StyledTableCell align="right">FT</StyledTableCell>
-                          <StyledTableCell align="right">OREB</StyledTableCell>
-                          <StyledTableCell align="right">DREB</StyledTableCell>
-                          <StyledTableCell align="right">REB</StyledTableCell>
-                          <StyledTableCell align="right">AST</StyledTableCell>
-                          <StyledTableCell align="right">STL</StyledTableCell>
-                          <StyledTableCell align="right">BLK</StyledTableCell>
-                          <StyledTableCell align="right">TO</StyledTableCell>
-                          <StyledTableCell align="right">PF</StyledTableCell>
-                          <StyledTableCell align="right">+/-</StyledTableCell>
-                          <StyledTableCell align="right">PTS</StyledTableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {teams[0].playerStats.map((row) => (
-                          <StyledTableRow key={row.teamDisplayName}>
-                            <StyledTableCell component="th" scope="row">
-                              {row.shortName}
-                            </StyledTableCell>
-                            <StyledTableCell align="right">{row.minutes}</StyledTableCell>
-                            <StyledTableCell align="right">{row.fieldGoals}</StyledTableCell>
-                            <StyledTableCell align="right">{row.threePointFG}</StyledTableCell>
-                            <StyledTableCell align="right">{row.freethrows}</StyledTableCell>
-                            <StyledTableCell align="right">{row.offensiveRebounds}</StyledTableCell>
-                            <StyledTableCell align="right">{row.defensiveRebounds}</StyledTableCell>
-                            <StyledTableCell align="right">{row.rebounds}</StyledTableCell>
-                            <StyledTableCell align="right">{row.assists}</StyledTableCell>
-                            <StyledTableCell align="right">{row.steals}</StyledTableCell>
-                            <StyledTableCell align="right">{row.blocks}</StyledTableCell>
-                            <StyledTableCell align="right">{row.turnovers}</StyledTableCell>
-                            <StyledTableCell align="right">{row.personalFouls}</StyledTableCell>
-                            <StyledTableCell align="right">{row.plusminus}</StyledTableCell>
-                            <StyledTableCell align="right">{row.points}</StyledTableCell>
-                          </StyledTableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                    )
-                }) : <h3>No data yet</h3> }
-        </>
+        
+    },[id]);
 
-      </>
+    return (
+        console.log(team1.playerStats, team2.playerStats),
+        <TableContainer sx={{ width: 500, height: 300}}>
+            <Table sx={{ width: 10 }} aria-label="customized table">
+                <TableHead>
+                    <TableRow>
+                        <StyledTableCell>Player</StyledTableCell>
+                        <StyledTableCell align="right">MIN</StyledTableCell>
+                        <StyledTableCell align="right">FG</StyledTableCell>
+                        <StyledTableCell align="right">3FG</StyledTableCell>
+                        <StyledTableCell align="right">FT</StyledTableCell>
+                        <StyledTableCell align="right">OREB</StyledTableCell>
+                        <StyledTableCell align="right">DREB</StyledTableCell>
+                        <StyledTableCell align="right">REB</StyledTableCell>
+                        <StyledTableCell align="right">AST</StyledTableCell>
+                        <StyledTableCell align="right">STL</StyledTableCell>
+                        <StyledTableCell align="right">BLK</StyledTableCell>
+                        <StyledTableCell align="right">TO</StyledTableCell>
+                        <StyledTableCell align="right">PF</StyledTableCell>
+                        <StyledTableCell align="right">+/-</StyledTableCell>
+                        <StyledTableCell align="right">PTS</StyledTableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {team1Players.map((data) => (
+                        <StyledTableRow key={data.teamId}>
+                            <StyledTableCell component="th" scope="row">
+                              {data.shortName}
+                            </StyledTableCell>
+                            <StyledTableCell align="right">{data.minutes}</StyledTableCell>
+                            <StyledTableCell align="right">{data.fieldGoals}</StyledTableCell>
+                            <StyledTableCell align="right">{data.threePointFG}</StyledTableCell>
+                            <StyledTableCell align="right">{data.freethrows}</StyledTableCell>
+                            <StyledTableCell align="right">{data.offensiveRebounds}</StyledTableCell>
+                            <StyledTableCell align="right">{data.defensiveRebounds}</StyledTableCell>
+                            <StyledTableCell align="right">{data.rebounds}</StyledTableCell>
+                            <StyledTableCell align="right">{data.assists}</StyledTableCell>
+                            <StyledTableCell align="right">{data.steals}</StyledTableCell>
+                            <StyledTableCell align="right">{data.blocks}</StyledTableCell>
+                            <StyledTableCell align="right">{data.turnovers}</StyledTableCell>
+                            <StyledTableCell align="right">{data.personalFouls}</StyledTableCell>
+                            <StyledTableCell align="right">{data.plusminus}</StyledTableCell>
+                            <StyledTableCell align="right">{data.points}</StyledTableCell>
+                        </StyledTableRow>
+                    )) }
+                </TableBody>
+                <StyledTableHead>
+                    <img src={team2.teamLogo} height="100" width="100"></img>
+                    {team2.teamDisplayName}
+                </StyledTableHead>
+                <TableHead>
+                    <TableRow>
+                        <StyledTableCell>Player</StyledTableCell>
+                        <StyledTableCell align="right">MIN</StyledTableCell>
+                        <StyledTableCell align="right">FG</StyledTableCell>
+                        <StyledTableCell align="right">3FG</StyledTableCell>
+                        <StyledTableCell align="right">FT</StyledTableCell>
+                        <StyledTableCell align="right">OREB</StyledTableCell>
+                        <StyledTableCell align="right">DREB</StyledTableCell>
+                        <StyledTableCell align="right">REB</StyledTableCell>
+                        <StyledTableCell align="right">AST</StyledTableCell>
+                        <StyledTableCell align="right">STL</StyledTableCell>
+                        <StyledTableCell align="right">BLK</StyledTableCell>
+                        <StyledTableCell align="right">TO</StyledTableCell>
+                        <StyledTableCell align="right">PF</StyledTableCell>
+                        <StyledTableCell align="right">+/-</StyledTableCell>
+                        <StyledTableCell align="right">PTS</StyledTableCell>
+                    </TableRow>
+                </TableHead>
+                
+                <TableBody>
+                    {team2Players.map((data) => (
+                        <StyledTableRow key={data.id}>
+                            <StyledTableCell component="th" scope="row">
+                              {data.shortName}
+                            </StyledTableCell>
+                            <StyledTableCell align="right">{data.minutes}</StyledTableCell>
+                            <StyledTableCell align="right">{data.fieldGoals}</StyledTableCell>
+                            <StyledTableCell align="right">{data.threePointFG}</StyledTableCell>
+                            <StyledTableCell align="right">{data.freethrows}</StyledTableCell>
+                            <StyledTableCell align="right">{data.offensiveRebounds}</StyledTableCell>
+                            <StyledTableCell align="right">{data.defensiveRebounds}</StyledTableCell>
+                            <StyledTableCell align="right">{data.rebounds}</StyledTableCell>
+                            <StyledTableCell align="right">{data.assists}</StyledTableCell>
+                            <StyledTableCell align="right">{data.steals}</StyledTableCell>
+                            <StyledTableCell align="right">{data.blocks}</StyledTableCell>
+                            <StyledTableCell align="right">{data.turnovers}</StyledTableCell>
+                            <StyledTableCell align="right">{data.personalFouls}</StyledTableCell>
+                            <StyledTableCell align="right">{data.plusminus}</StyledTableCell>
+                            <StyledTableCell align="right">{data.points}</StyledTableCell>
+                        </StyledTableRow>
+                    )) }
+                </TableBody>
+            </Table>
+        </TableContainer>
     )
     
   }

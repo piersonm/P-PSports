@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
 import { BrowserRouter , Routes, Route } from "react-router-dom";
 import Header from './containers/header';
@@ -6,9 +6,7 @@ import NBA from './pages/NBA/NBA';
 import BoxScore from './pages/NBA/BoxScore';
 
 
-class App extends Component {
-
-  render() {
+export default function App() {
     return (
       <div>
         <BrowserRouter>
@@ -22,6 +20,5 @@ class App extends Component {
       
     );
   }
-}
 
-export default App;
+

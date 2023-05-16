@@ -9,7 +9,7 @@ const Container = styled.div`
   flex: 1 1 calc(33.3% - 2em);
   margin: 0.5em .5rem;
   max-width: 300px;
-  min-width: 280px;
+  min-width: 230px;
   transition: all .25s ease;
   box-shadow: 0px 7px 15px rgba(0,0,0,0.4);
 
