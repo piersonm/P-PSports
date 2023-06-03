@@ -13,7 +13,6 @@ export default function App() {
         <Header />
         <Routes>
             <Route exact path="/NBA" element={<div className="NBA"><NBA /></div>}/>
-            <Route exact path="/:league/gameID/:id/boxscore" element={<div className='BoxScore'><BoxScore/></div>} />
         </Routes>
         </BrowserRouter>
       </div>

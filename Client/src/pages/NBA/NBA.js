@@ -14,7 +14,6 @@ const breakPoint = '(max-width: 550px)';
 
 const Container = styled.div`
     min-height: 10vh;
-    width: 14.2vw;
     display: flex;
     flex-direction: column;
     margin: 0.5rem;
@@ -24,7 +23,8 @@ const Container = styled.div`
 const ScoreListContainer = styled.div`
     display: flex;
     flex-wrap: none;
-    width: 19vw;
+    min-height: 10vh;
+    width: 25vw;
     margin: 0;
     
     @media ${breakPoint} {
@@ -76,17 +76,21 @@ export default function NBA() {
                 workingSetGames.push(selectedGameData);
             }      
             setGames(workingSetGames);
+            setDate(date);
         });
     }, [date])
 
     return (
-        <Container className="FlexColumn">
+        <aside>
+        <Container id="leftNavCol">
             <SportHeaderDay sport='NBA' setDate={setDate}/>
-            <ScoreListContainer className={['slider-wrapper', 'slider-container']} id="scores">
+            <ScoreListContainer className={['slider-wrapper', 'slider-container']}>
                 {games.map((game) => (
                     <ScoreBox key={game.id} gameData={game}/>
                 ))}
             </ScoreListContainer>
         </Container>
+        </aside>
+        
     )
 }

@@ -77,7 +77,7 @@ export default function SportHeaderDay({sport, setDate}) {
     }
 
     const [startDate, setStartDate] = useState(new Date());
-    const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
+    const DateInput = forwardRef(({ value, onClick }, ref) => (
         <CalendarButton onClick={onClick} ref={ref}>
           {value}
         </CalendarButton>
@@ -88,9 +88,9 @@ export default function SportHeaderDay({sport, setDate}) {
             <DayWrapper>
                 <DatePicker 
                 selected={startDate}
-                value={value} 
+                value={value}
                 onChange={(date) => {setStartDate(date); handleChange(date)}} 
-                customInput={<ExampleCustomInput/>}/>
+                customInput={<DateInput/>}/>
             </DayWrapper>
         </Header>
     )

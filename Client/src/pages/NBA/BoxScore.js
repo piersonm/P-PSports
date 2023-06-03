@@ -120,6 +120,10 @@ export default function BoxScore() {
         console.log(team1.playerStats, team2.playerStats),
         <TableContainer sx={{ width: 500, height: 300}}>
             <Table sx={{ width: 10 }} aria-label="customized table">
+            <StyledTableHead>
+                    <img src={team1.teamLogo} height="100" width="100"></img>
+                    {team1.teamDisplayName}
+                </StyledTableHead>
                 <TableHead>
                     <TableRow>
                         <StyledTableCell>Player</StyledTableCell>
