@@ -64,20 +64,6 @@ class Routes extends Component {
           <div>
             <Switch>
               <Route exact path='/' component={Home} />
-              {/* <Route path='/hooksform' component={HooksForm} />
-              <Route path='/hookscontainer' component={HooksContainer1} />
-              <Route path='/authcheck' render={() => <AuthCheck auth={auth} /> }/>
-              
-
-              <Route path='/posts' component={Posts} />
-              <Route path='/post/:pid' component={ShowPost} />
-              <Route path='editpost/:pid' component={EditPost} />
-              <Route path='/addpost' component={AddPost} />
-
-              <Route path='/callback' render={(props) => { handleAuthentication(props); return <Callback />}} />
-
-              <PrivateRoute path='/privateroute' auth={auth} component={PrivateComponent} />
-              <PrivateRoute path="/profile" auth={auth} component={Profile} /> */}
               <Route path="/NBA" component={NBA}/>
               <Route path="/:league/gameID/:id/boxscore" component={BoxScore} />
               <Route Route exact path="/:league/TeamPage/:teamAbbreviation" component={TeamPage}/>

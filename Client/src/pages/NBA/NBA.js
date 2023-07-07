@@ -82,7 +82,7 @@ export default function NBA() {
 
     return (
         <aside>
-        <Container id="leftNavCol">
+        <Container id="leftNavCol" className='FlexColumn'>
             <SportHeaderDay sport='NBA' setDate={setDate}/>
             <ScoreListContainer className={['slider-wrapper', 'slider-container']}>
                 {games.map((game) => (
