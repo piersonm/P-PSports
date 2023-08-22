@@ -5,58 +5,31 @@ import DatePicker from 'react-datepicker';
 
 const breakPoint = '(max-width: 550px)';
 
-const Header = styled.div`
-    display: flex;
-    flex-direction: column;
-    padding-top: 0em;
-    padding-bottom: 3em;
-
-    @media ${breakPoint} {
-        padding-top: calc(3em + 60px);
-        padding-bottom: 1em;
-    }
+const Container = styled.div`
+    flex-direction: row;
+    flex-flow: row wrap;
+    padding-top: 1rem;
+    font-size: 1.5rem;
+    display: inline-block;
+    white-space: nowrap;
+    min-width: auto;
 `
 
-const Title = styled.h1`
-    display: flex;
-    flex-direction: column;
-    font-size: 1.45em;
-    font-weight: 500;
-    text-align: left;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5em;
-    
-    @media ${breakPoint} {
-        font-size: 2.5rem;
-    }
-`
-
-const DayWrapper = styled.div`
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 5%;
-    margin: 0;
-    
-    @media ${breakPoint} {
-        flex-direction: column;
-    }
-`
 const CalendarButton = styled.button`
-  background-color: black;
-  border: none;
-  border-radius: 10px;
-  color: white;
-  padding: 10px 25px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 14px;
-  margin: 4px 2px;
-  cursor: pointer;
-  -webkit-transition-duration: 0.4s; /* Safari */
-  transition-duration: 0.4s;
-  &:hover { box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19); }
+    display: flex;
+    background-color: black;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    padding: 10px 18px;
+    text-align: center;
+    margin: .5rem;
+    margin-inline-start: 4.5rem;
+    font-size: 14px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    &:hover { box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19); }
 `
 export default function SportHeaderDay({sport, setDate}) {
 
@@ -83,15 +56,13 @@ export default function SportHeaderDay({sport, setDate}) {
         </CalendarButton>
     ));
     return (
-        <Header>
-            <Title>{sport} Scores </Title>
-            <DayWrapper>
-                <DatePicker 
+        <Container>
+            {sport} Scores
+            <DatePicker 
                 selected={startDate}
                 value={value}
                 onChange={(date) => {setStartDate(date); handleChange(date)}} 
                 customInput={<DateInput/>}/>
-            </DayWrapper>
-        </Header>
+        </Container>
     )
 }

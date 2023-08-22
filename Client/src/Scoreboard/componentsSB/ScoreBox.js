@@ -63,8 +63,8 @@ const Container = styled.div`
   display: inline-block;
   flex: 1 1 calc(33.3% - 2em);
   margin: 0.5em .5rem;
-  max-width: 300px;
-  min-width: 230px;
+  width: 25%;
+  min-width: 300px;
   transition: all .25s ease;
   box-shadow: 0px 7px 15px rgba(0,0,0,0.4);
 

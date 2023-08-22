@@ -12,7 +12,7 @@ export default function App() {
         <BrowserRouter>
         <Header />
         <Routes>
-            <Route exact path="/NBA" element={<div className="NBA"><NBA /></div>}/>
+            <Route exact path="/NBA/Scores" element={<div className="NBA"><NBA /></div>}/>
         </Routes>
         </BrowserRouter>
       </div>
