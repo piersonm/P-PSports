@@ -11,8 +11,11 @@ import { formatSelectedData } from '../../Scoreboard/functionalSB/formatSelected
 
 
 const breakPoint = '(max-width: 550px)';
+const Container = styled.div`
+    display: flex;
+`
 
-const Container = styled.ul`
+const SideBar = styled.ul`
   display: flex;
   flex-flow: row wrap;
   min-width: 350px;
@@ -79,15 +82,17 @@ export default function NBA() {
     }, [date])
 
     return (
-        <Container className='sidebar'>
-            <SportHeaderDay sport='NBA' setDate={setDate}/>
-            <li>
-            <ScoreListContainer className='slider-wrapper'>
-                {games.map((game) => (
-                    <ScoreBox key={game.id} gameData={game}/>
-                ))}
-            </ScoreListContainer>
-            </li>
+        <Container>
+            <SideBar className='sidebar'>
+                <SportHeaderDay sport='NBA' setDate={setDate}/>
+                <li>
+                <ScoreListContainer className='slider-wrapper'>
+                    {games.map((game) => (
+                        <ScoreBox key={game.id} gameData={game}/>
+                    ))}
+                </ScoreListContainer>
+                </li>
+            </SideBar>
         </Container>
         
     )

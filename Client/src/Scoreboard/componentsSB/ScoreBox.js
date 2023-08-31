@@ -15,6 +15,14 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead, { tableHeadClasses } from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
+import ViewListIcon from '@mui/icons-material/ViewList';
+import ViewModuleIcon from '@mui/icons-material/ViewModule';
+import ViewQuiltIcon from '@mui/icons-material/ViewQuilt';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import BoxScore from '../../pages/NBA/BoxScore';
+
+
 const StyledTableCell = muiStyle(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: theme.palette.common.black,
@@ -63,8 +71,8 @@ const Container = styled.div`
   display: inline-block;
   flex: 1 1 calc(33.3% - 2em);
   margin: 0.5em .5rem;
-  width: 25%;
-  min-width: 300px;
+  max-width: 300px;
+  min-width: 230px;
   transition: all .25s ease;
   box-shadow: 0px 7px 15px rgba(0,0,0,0.4);
 
@@ -265,136 +273,25 @@ export default function ScoreBox({gameData}) {
       
   },[gameData.id]);
 
+  const [view, setView] = React.useState('list');
+
+  const handleChange = (event, nextView) => {
+    setView(nextView);
+  };
+
 
   return (
+    <>
     <Container>
       <GameInfo name ='GameInfo' id={gameData.id}>
         <Date>{gameData.date}</Date>
         <Time>{gameData.time}</Time>
         <TV>{gameData.tv}</TV>
     
-        <Button id="boxScoreButton" onClick={handleOpen}>Box Score</Button>
-        <Modal
-          aria-labelledby="transition-modal-title"
-          aria-describedby="transition-modal-description"
-          open={open}
-          onClose={handleClose}
-          closeAfterTransition
-          slots={{ backdrop: Backdrop }}
-          slotProps={{
-            backdrop: {
-              timeout: 500,
-            },
-          }}
-        >
-          <Fade in={open}>
-          <Box sx={style}>
-          <TableContainer sx={{width: '60vw', height: '35vh'}}>
-          <div class="imageContainer">
-              <img src={team1.teamLogo} height="100" width="100"></img>
-              <div class="text"><h2>{team1.teamDisplayName}</h2></div>
-          </div>
-              <Table aria-label="customized table">
-                  <TableHead>
-                      <TableRow>
-                          <StyledTableCell>Player</StyledTableCell>
-                          <StyledTableCell align="right">MIN</StyledTableCell>
-                          <StyledTableCell align="right">FG</StyledTableCell>
-                          <StyledTableCell align="right">3FG</StyledTableCell>
-                          <StyledTableCell align="right">FT</StyledTableCell>
-                          <StyledTableCell align="right">OREB</StyledTableCell>
-                          <StyledTableCell align="right">DREB</StyledTableCell>
-                          <StyledTableCell align="right">REB</StyledTableCell>
-                          <StyledTableCell align="right">AST</StyledTableCell>
-                          <StyledTableCell align="right">STL</StyledTableCell>
-                          <StyledTableCell align="right">BLK</StyledTableCell>
-                          <StyledTableCell align="right">TO</StyledTableCell>
-                          <StyledTableCell align="right">PF</StyledTableCell>
-                          <StyledTableCell align="right">+/-</StyledTableCell>
-                          <StyledTableCell align="right">PTS</StyledTableCell>
-                      </TableRow>
-                  </TableHead>
-                  <TableBody>
-                      {team1Players.map((data) => (
-                          <StyledTableRow key={data.teamId}>
-                              <StyledTableCell component="th" scope="row">
-                                {data.shortName}
-                              </StyledTableCell>
-                              <StyledTableCell align="right">{data.minutes}</StyledTableCell>
-                              <StyledTableCell align="right">{data.fieldGoals}</StyledTableCell>
-                              <StyledTableCell align="right">{data.threePointFG}</StyledTableCell>
-                              <StyledTableCell align="right">{data.freethrows}</StyledTableCell>
-                              <StyledTableCell align="right">{data.offensiveRebounds}</StyledTableCell>
-                              <StyledTableCell align="right">{data.defensiveRebounds}</StyledTableCell>
-                              <StyledTableCell align="right">{data.rebounds}</StyledTableCell>
-                              <StyledTableCell align="right">{data.assists}</StyledTableCell>
-                              <StyledTableCell align="right">{data.steals}</StyledTableCell>
-                              <StyledTableCell align="right">{data.blocks}</StyledTableCell>
-                              <StyledTableCell align="right">{data.turnovers}</StyledTableCell>
-                              <StyledTableCell align="right">{data.personalFouls}</StyledTableCell>
-                              <StyledTableCell align="right">{data.plusminus}</StyledTableCell>
-                              <StyledTableCell align="right">{data.points}</StyledTableCell>
-                          </StyledTableRow>
-                      )) }
-                  </TableBody>
-                  </Table>
-                  </TableContainer>
+        <Button id="boxScoreButton" >Box Score</Button>
 
-                  <TableContainer sx={{width: '60vw', height: '35vh'}}>
-                    <div class="imageContainer">
-                      <img src={team2.teamLogo} height="100" width="100"></img>
-                      <div class="text"><h2>{team2.teamDisplayName}</h2></div>
-                    </div>
-                  <Table aria-label="customized table">
-                  <TableHead>
-                      <TableRow>
-                          <StyledTableCell>Player</StyledTableCell>
-                          <StyledTableCell align="right">MIN</StyledTableCell>
-                          <StyledTableCell align="right">FG</StyledTableCell>
-                          <StyledTableCell align="right">3FG</StyledTableCell>
-                          <StyledTableCell align="right">FT</StyledTableCell>
-                          <StyledTableCell align="right">OREB</StyledTableCell>
-                          <StyledTableCell align="right">DREB</StyledTableCell>
-                          <StyledTableCell align="right">REB</StyledTableCell>
-                          <StyledTableCell align="right">AST</StyledTableCell>
-                          <StyledTableCell align="right">STL</StyledTableCell>
-                          <StyledTableCell align="right">BLK</StyledTableCell>
-                          <StyledTableCell align="right">TO</StyledTableCell>
-                          <StyledTableCell align="right">PF</StyledTableCell>
-                          <StyledTableCell align="right">+/-</StyledTableCell>
-                          <StyledTableCell align="right">PTS</StyledTableCell>
-                      </TableRow>
-                  </TableHead>
-                  
-                  <TableBody>
-                      {team2Players.map((data) => (
-                          <StyledTableRow key={data.id}>
-                              <StyledTableCell component="th" scope="row">
-                                {data.shortName}
-                              </StyledTableCell>
-                              <StyledTableCell align="right">{data.minutes}</StyledTableCell>
-                              <StyledTableCell align="right">{data.fieldGoals}</StyledTableCell>
-                              <StyledTableCell align="right">{data.threePointFG}</StyledTableCell>
-                              <StyledTableCell align="right">{data.freethrows}</StyledTableCell>
-                              <StyledTableCell align="right">{data.offensiveRebounds}</StyledTableCell>
-                              <StyledTableCell align="right">{data.defensiveRebounds}</StyledTableCell>
-                              <StyledTableCell align="right">{data.rebounds}</StyledTableCell>
-                              <StyledTableCell align="right">{data.assists}</StyledTableCell>
-                              <StyledTableCell align="right">{data.steals}</StyledTableCell>
-                              <StyledTableCell align="right">{data.blocks}</StyledTableCell>
-                              <StyledTableCell align="right">{data.turnovers}</StyledTableCell>
-                              <StyledTableCell align="right">{data.personalFouls}</StyledTableCell>
-                              <StyledTableCell align="right">{data.plusminus}</StyledTableCell>
-                              <StyledTableCell align="right">{data.points}</StyledTableCell>
-                          </StyledTableRow>
-                      )) }
-                  </TableBody>
-              </Table>
-          </TableContainer>
 
-          </Box>
-        </Fade>
-        </Modal>
+
       </GameInfo>
       <LogoBackground color={gameData.awayColor} to={`/${gameData.league}/TeamPage/${gameData.awayAbbreviation}`}>
         <Logo src={gameData.awayLogo} alt={`${gameData.awayName} logo`}/>
@@ -413,5 +310,25 @@ export default function ScoreBox({gameData}) {
         <Score>{gameData.homeScore}</Score>
       </LogoBackground>
     </Container>
+    <ToggleButtonGroup
+      key={gameData.id}
+      gameData={gameData}
+      orientation="vertical"
+      value={view}
+      exclusive
+      onChange={handleChange}>
+
+      <ToggleButton value="list" aria-label="list">
+          <BoxScore key={gameData.id} game={gameData}/>
+      </ToggleButton>
+      <ToggleButton value="module" aria-label="module">
+          <ViewModuleIcon />
+      </ToggleButton>
+      <ToggleButton value="quilt" aria-label="quilt">
+          <ViewQuiltIcon />
+      </ToggleButton>
+
+    </ToggleButtonGroup>
+</>
   ) 
 }

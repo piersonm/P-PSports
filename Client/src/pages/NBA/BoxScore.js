@@ -7,6 +7,11 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead, { tableHeadClasses } from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import Drawer from '@mui/material/Drawer';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import CssBaseline from '@mui/material/CssBaseline';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -35,10 +40,10 @@ const StyledTableHead = styled(TableHead)(({ theme }) => ({
     },
 }));
 
-export default function BoxScore() {
-    var url = window.location.href;
-    var removePath = url.split('D/')[1];
-    var id = removePath.split('/')[0];
+const drawerWidth = 240;
+
+export default function BoxScore({game}) {
+    const [open, setOpen] = React.useState();
     // const [data, setData] = useState('');
     const [team1, setTeam1] = useState([]);
     const [team2, setTeam2] = useState([]);
@@ -46,7 +51,7 @@ export default function BoxScore() {
     const [team2Players, setTeam2Players] = useState([]);
     
     useEffect(() => {
-        axios.get(`http://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=${id}`)
+        axios.get(`http://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=${game.id}`)
         .then(res => {
             
             // setData(res.data);
@@ -113,12 +118,16 @@ export default function BoxScore() {
             console.log(error)
         });
         
-    },[id]);
-
-    return (
-        console.log(team1.playerStats, team2.playerStats),
-        <TableContainer sx={{ width: 500, height: 300}}>
-            <Table sx={{ width: 10 }} aria-label="customized table">
+    },[game.id]);
+  
+    const handleDrawerToggle = () => {
+      setOpen(!open);
+    };
+  
+    const drawer = (
+      <div>
+                <TableContainer>
+            <Table aria-label="customized table">
             <StyledTableHead>
                     <img src={team1.teamLogo} height="100" width="100"></img>
                     {team1.teamDisplayName}
@@ -214,7 +223,52 @@ export default function BoxScore() {
                 </TableBody>
             </Table>
         </TableContainer>
-    )
-    
-  }
+        </div>
+    );
+
+  return (
+    <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { sm: 'none' } }}
+          >
+            <MenuIcon />
+          </IconButton>
+      <Box
+        component="nav"
+        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+        aria-label="mailbox folders"
+      >
+        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+        <Drawer
+          variant="temporary"
+          open={!open}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
+          sx={{
+            display: { xs: 'block', sm: 'none' },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+          }}
+        >
+          {drawer}
+        </Drawer>
+        <Drawer
+          variant="permanent"
+          sx={{
+            display: { xs: 'none', sm: 'block' },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+          }}
+          open
+        >
+          {drawer}
+        </Drawer>
+        </Box>
+        </Box>
+)}
 
