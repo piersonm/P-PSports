@@ -1,2 +1,2 @@
 # P&PSports
- Sports predictions and new website
+ Sports predictions and news website
